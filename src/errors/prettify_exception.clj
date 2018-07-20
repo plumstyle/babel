@@ -148,7 +148,6 @@
       ;(println (str "MESSAGE in get-all-text" msg-obj))
   (reduce #(str %1 (:msg %2)) "" msg-obj))
 
-
 ;; TO-DO: simplify handling the rest: now there is only one match -EM 5/20
 (defn get-exception-class-and-rest
   "returns a vector contianing the class and then the message without the class marking"

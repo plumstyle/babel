@@ -6,7 +6,4 @@
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/tools.nrepl "0.2.13"]
                  [expectations "2.2.0-rc3"]]
-  :plugins [[lein-expectations "0.0.8"]]
-  :repl-options {:nrepl-middleware
-                 [babel.middleware/interceptor]
-                 :port 7888})
+  :plugins [[lein-expectations "0.0.8"]])
