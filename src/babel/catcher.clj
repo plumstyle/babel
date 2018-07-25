@@ -3,23 +3,20 @@
             [errors.prettify-exception :as p-exc]
             [errors.messageobj :as m-obj]))
 
-;;need to figure out how to get this loaded wihtout having to use this pass through middleware
-(defn interceptor
-  "applies processor/modify-errors to every response that emerges from the server"
-  [handler]
-  (fn [inp-message] (identity inp-message)))
-
-;;sets the appropriate flags on the middleware so it is placed correctly
-(clojure.tools.nrepl.middleware/set-descriptor! #'interceptor
-                                                {:expects #{"eval"} :requires #{} :handles {}})
 
 ;;this is the new version down here, using AvisoNovate's method for retrieving errors.
 (defn- reset-var!
   [v override]
   (alter-var-root v (constantly override)))
 
-(defn rewrite-error [ex] (println (str  (m-obj/get-all-text (:msg-info-obj (p-exc/process-spec-errors (.getMessage ex)))) "\n")))
+;;demonstration that we can dispatch errors to our processing system. Fails ludicrously, but can likely be adjusted.
+#_(defn rewrite-error [ex] (println (str "HORP" (m-obj/get-all-text (:msg-info-obj (p-exc/process-spec-errors (.getMessage ex)))) "\n")))
+
+;;this iteration showed that we cannot just rethrow an exception without going comedically recursive. Again.
+#_(defn rewrite-error [ex] (throw (Exception. (str "This is an " (.getMessage ex) ". The stacktrace goes from "(first (.getStackTrace ex)) " to " (first (.getStackTrace ex))))))
+
+(defn rewrite-error [ex] (binding [*out* *err*] (println (str "This is a " (.getMessage ex) " error. The stacktrace goes from "(first (.getStackTrace ex)) " to " (first (.getStackTrace ex))))))
 
 ;;make the switch
-
 (reset-var! #'main/repl-caught rewrite-error)
+(println "Error messages are handled by babel now")
