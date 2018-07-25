@@ -15,7 +15,7 @@
 ;;this iteration showed that we cannot just rethrow an exception without going comedically recursive. Again.
 #_(defn rewrite-error [ex] (throw (Exception. (str "This is an " (.getMessage ex) ". The stacktrace goes from "(first (.getStackTrace ex)) " to " (first (.getStackTrace ex))))))
 
-(defn rewrite-error [ex] (binding [*out* *err*] (println (str "This is a " (.getMessage ex) " error. The stacktrace goes from "(first (.getStackTrace ex)) " to " (first (.getStackTrace ex))))))
+(defn rewrite-error [ex]  (.println *err* (str "This is a " (.getMessage ex) " error. The stacktrace goes from "(first (.getStackTrace ex)) " to " (first (.getStackTrace ex)))))
 
 ;;make the switch
 (reset-var! #'main/repl-caught rewrite-error)
