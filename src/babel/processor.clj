@@ -2,7 +2,8 @@
   (:require  [clojure.tools.nrepl :as repl]
              [clojure.spec.test.alpha :as stest]
              [errors.messageobj :as m-obj]
-             [errors.prettify-exception :as p-exc]))
+             [errors.prettify-exception :as p-exc]
+             [corefns.corefns :as cf]))
 
 (defn extract-error "takes an nREPL message and extracts the most recent error object, or nil if the message is not relevant" [inp-message]
 ;;if we have both an :op 'eval' message and the exception key exists, we can assume that an error has been caused
