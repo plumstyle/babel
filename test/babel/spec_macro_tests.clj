@@ -30,6 +30,12 @@
 (expect "Parameters for let require a vector, but a was given instead.\n"
         (get-error " (let a (+ a 2))"))
 
+(expect "Parameters for let require a vector, but a was given instead.\n"
+        (get-error " (let a)"))
+
+(expect "An argument for let required a binding but no binding was provided.\n"
+        (get-error " (let )"))
+
 ;############################################
 ;#### Testing for 'let-like forms ###########
 ;############################################
@@ -42,6 +48,12 @@
 
 (expect "In let 2 is used instead of a variable name.\n"
         (get-error "(let [2 3] 8)"))
+
+(expect "An argument for if-let required a binding but no binding was provided.\n"
+        (get-error "(if-let)"))
+
+(expect "An argument for if-let required a vector, but was given a instead.\n"
+        (get-error "(if-let a)"))
 
 ;############################################
 ;#### Testing for 'defn' ###########
@@ -59,6 +71,18 @@
 (expect "An argument for defn- required a vector, but x was given instead.\n"
         (get-error "(defn- afunc2 x (+ 3 x))"))
 
+(expect "Another argument for defn was required but wasn't given.\n"
+        (get-error "(defn a)"))
+
+(expect "Another argument for defn- was required but wasn't given.\n"
+        (get-error "(defn- a)"))
+
+(expect "An argument for defn was required but wasn't given.\n"
+        (get-error "(defn)"))
+
+(expect "An argument for defn- was required but wasn't given.\n"
+        (get-error "(defn-)"))
+
 ;############################################
 ;#### Testing for 'fn' ###########
 ;############################################
@@ -73,6 +97,12 @@
 
 (expect "An argument for fn required a vector, but p was given instead.\n"
         (get-error "(let [x 7] (fn [r] (fn p (+ p p))))"))
+
+(expect "Another argument for fn was required but wasn't given.\n"
+        (get-error "(fn a)"))
+
+(expect "An argument for fn was required but wasn't given.\n"
+        (get-error "(fn)"))
 
 ;############################################
 ;#### Testing for 'if-some' ###########
@@ -89,3 +119,6 @@
 
 (expect "if-some can only take two or three arguments; recieved one argument.\n"
         (get-error "(if-some [a 2])"))
+
+(expect "if-some can only take two or three arguments; recieved no arguments.\n"
+        (get-error "(if-some)"))
